@@ -72,4 +72,20 @@ Maths
                 instead of subtracting b from a until it can't 
                 we can use a%b
                 gcd(a,b) = gcd(a%b,b) where a>b
+Hashing 
+    precomputation (number hashing)
+        to count occurrence of each number in an array 
+        if numbers range are limited ex: 1-10
+        we can created array of len 11 & store count in arr[num]
+        for strings (a-z), we can use the array of len 26 to keep the count 
+    Map 
+        stores key value pairs 
+        insertion and retrieval take O(1), very rarely O(n) due to internal collisions
+        uses some hashing methods to store data 
+        division method
+            lets say we have array of max len 10 
+            for every element we do num%10 to get the index to store it 
+            if collison occurs, create new node (linked list) and add it the index
+            this new element will be inserted in sorted order 
+            if lot of numbers are added to same index, it will take O(n)        
 */

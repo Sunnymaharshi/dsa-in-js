@@ -1,3 +1,4 @@
+/*
 Time complexity
     Omega (Ω)
         best case scenario or lower bound
@@ -23,4 +24,4 @@ Tips
     most servers take 1s for 10^8 operations
     
 
-        
+*/

@@ -87,5 +87,65 @@ Hashing
             for every element we do num%10 to get the index to store it 
             if collison occurs, create new node (linked list) and add it the index
             this new element will be inserted in sorted order 
-            if lot of numbers are added to same index, it will take O(n)        
+            if lot of numbers are added to same index, it will take O(n)
+
+Sorting 
+    Selection Sort
+        select minimums & swap 
+        1. start from i to n-2
+            n-2 as no need to swap last element with itself
+        2. search for min 
+            range i to n-1 & swap with ith index 
+            search min in right side as left is already sorted 
+        code:
+            for(i=0; i<=n-2; i++){
+                min_idx = i;
+                for(j=i; j<=n-1; j++){
+                    if(arr[j]<arr[min_idx])
+                        min_idx = j
+                }
+                swap(arr[i],arr[min_idx])
+            }
+        Time Complexity: O(n^2)
+
+    Bubble Sort 
+        adjacent swapping - push max elements to last by adjacent swaps
+        1. start from i to n-1             
+        2. swap adjacents  
+            range i to n-1-i, swap adjacent elements (left side)
+            max element will be moved to last index 
+            right side will be sorted 
+        Bubble Sort Optimized (best case)
+            if array is already sorted 
+            we can reduce time complexity by breaking loop if no swap is occurred 
+            best for mostly sorted array
+        code: 
+            for(i=0; i<=n-1; i++){
+                for(j=1; j<=n-1-i; j++){
+                    if(arr[j]<arr[j-1])
+                        swap(arr[j],arr[j-1])
+                }                
+            }
+        Time Complexity: 
+            O(n^2) for worst and average case
+            O(n) for best case 
+         
+    Insertion Sort 
+        always takes an element and inserts it in correct position
+        1. for each element i (0 to n-1)
+        2. swap it with prev elements until u can't swap 
+            puts ith element in correct position
+            remaining elements right shifts by 1
+        code:
+            for(i=0; i<=n-1; i++){
+                j = i;
+                while (j > 0 && arr[j] < arr[j - 1]) {
+                    swap(arr[j],arr[j-1]);
+                    j--;
+                }                
+            }
+        if array is already sorted it never enters while loop
+        Time Complexity: 
+            O(n^2) for worst case and average case
+            O(n) for best case
 */

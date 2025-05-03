@@ -53,3 +53,34 @@ function insertion_sort(arr = [4, 5, 2, 3, 1]) {
   console.log(arr);
 }
 // insertion_sort();
+
+function mergeSort(arr) {
+  // single element in the array
+  if (arr.length <= 1) {
+    return arr;
+  }
+  const mid = Math.floor(arr.length / 2);
+  const left = mergeSort(arr.slice(0, mid));
+  const right = mergeSort(arr.slice(mid));
+  // merge left and right sorted arrays
+  return merge(left, right);
+}
+function merge(left, right) {
+  const sorted_arr = [];
+  let l = 0;
+  let r = 0;
+  while (l < left.length && r < right.length) {
+    if (left[l] < right[r]) {
+      sorted_arr.push(left[l]);
+      l++;
+    } else {
+      sorted_arr.push(right[r]);
+      r++;
+    }
+  }
+  const remainingLeft = left.slice(l);
+  const remainingRight = right.slice(r);
+  return sorted_arr.concat(remainingLeft).concat(remainingRight);
+}
+
+console.log(mergeSort([4, 5, 2, 3, 1, 0]));

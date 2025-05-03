@@ -148,4 +148,41 @@ Sorting
         Time Complexity: 
             O(n^2) for worst case and average case
             O(n) for best case
+    
+    Merge sort
+        divide and merge 
+        1. divide array until u have only 1 element left
+            divide array into left and right
+            recursively divide both sides until u can't 
+        2. merge both sides after dividing 
+            each side will have single element or sorted elements
+            merge them in sorted order
+        code:
+            mergeSort(arr){
+                if(arr.length<=1){
+                    return arr;
+                }
+                mid = Math.floor(arr.length/2);
+                left = mergeSort(arr.slice(0,mid));
+                right = mergeSort(arr.slice(mid));
+                return merge(left,right);
+            }
+            merge(left,right){
+                res = []
+                l=0
+                r=0
+                while(l<left.length && r<right.length){
+                    if(left[l]<right[r]){
+                        res.push(left[l])
+                        l++
+                    }
+                    else {
+                        res.push(right[r])
+                        r++
+                    }
+                }
+                res.concat(left.slice(l))
+                res.concat(right.slice(r))
+                return res;
+            }
 */

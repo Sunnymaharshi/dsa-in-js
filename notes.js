@@ -338,4 +338,79 @@ Arrays
                 3.reverse total array
             Time Complexity: 
                 O(n+k)
+    Move zeros to the end 
+        brute force 
+            store non zero elements in seperate array 
+            add these at start of original array 
+            fill remaining with 0s 
+        optimal (2 pointer approach)
+            i tracks 0s from left 
+            j track non zero's from right 
+            while(i<j){
+                // go to first 0 from left
+                while (arr[i] !== 0 && i < arr.length) {
+                    i++;
+                }
+                // go to first non zero from right
+                while (arr[j] === 0 && j >= 0) {
+                    j--;
+                }
+                if (i < j) {
+                    // swap zero from left with non-zero from right
+                    swap(arr[i],arr[j])
+                }
+            }
+        Time Complexity:
+            O(n)
+    union of two sorted arrays (without duplicates)
+        optimal (two pointer approach)
+        similar to mergeSort merge function
+        code:
+            const res = [];
+            let i = 0;
+            let j = 0;
+            while (i < arr1.length && j < arr2.length) {
+                if (arr1[i] <= arr2[j]) {
+                    if (res.length === 0 || res[res.length - 1] !== arr1[i]) {
+                        res.push(arr1[i]);
+                    }
+                    i++;
+                } else {
+                    if (res.length === 0 || res[res.length - 1] !== arr2[j]) {
+                        res.push(arr2[j]);
+                    }
+                    j++;
+                }
+            }
+            while (i < arr1.length) {
+                if (res[res.length - 1] !== arr1[i]) {
+                    res.push(arr1[i]);
+                }
+                i++;
+            }
+            while (j < arr2.length) {
+                if (res[res.length - 1] !== arr2[j]) {
+                    res.push(arr2[j]);
+                }
+                j++;
+            }
+        Time Complexity:
+            O(n+m)    
+    intersectionOfSorted 
+        code: 
+            while (i < arr1.length && j < arr2.length) {
+            if (arr1[i] < arr2[j]) {
+                i++;
+            } else if (arr1[i] > arr2[j]) {
+                j++;
+            } else {
+                if (res.length === 0 || res[res.length - 1] != arr1[i]) {
+                    res.push(arr1[i]);
+                }
+                i++;
+                j++;
+            }
+        }
+        Time complexity:
+            O(n+m)
 */

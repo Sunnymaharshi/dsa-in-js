@@ -159,3 +159,77 @@ function rightRotateByK_optimal(arr, k) {
 }
 // console.log(rightRotateByK_optimal([1, 2, 3, 4, 5], 2));
 // output: [ 4, 5, 1, 2, 3 ]
+
+function moveZeroestoEnd(arr) {
+  // optimal 2 pointer approach
+  let i = 0; // track zero's from left
+  let j = arr.length - 1; // track non zeroes from right
+
+  while (i < j) {
+    while (arr[i] !== 0 && i < arr.length) {
+      i++;
+    }
+    while (arr[j] === 0 && j >= 0) {
+      j--;
+    }
+    if (i < j) {
+      // swap zero from left with non-zero from right
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+  }
+  return arr;
+}
+// console.log(moveZeroestoEnd([1, 2, 0, 0, 3]));
+
+function unionOfSortedWithoutDup(arr1, arr2) {
+  const res = [];
+  let i = 0;
+  let j = 0;
+  while (i < arr1.length && j < arr2.length) {
+    if (arr1[i] <= arr2[j]) {
+      if (res.length === 0 || res[res.length - 1] !== arr1[i]) {
+        res.push(arr1[i]);
+      }
+      i++;
+    } else {
+      if (res.length === 0 || res[res.length - 1] !== arr2[j]) {
+        res.push(arr2[j]);
+      }
+      j++;
+    }
+  }
+  while (i < arr1.length) {
+    if (res[res.length - 1] !== arr1[i]) {
+      res.push(arr1[i]);
+    }
+    i++;
+  }
+  while (j < arr2.length) {
+    if (res[res.length - 1] !== arr2[j]) {
+      res.push(arr2[j]);
+    }
+    j++;
+  }
+  return res;
+}
+// console.log(unionOfSortedWithoutDup([1, 3, 5, 5], [2, 2, 3]));
+function intersectionOfSortedWithoutDup(arr1, arr2) {
+  const res = [];
+  let i = 0;
+  let j = 0;
+  while (i < arr1.length && j < arr2.length) {
+    if (arr1[i] < arr2[j]) {
+      i++;
+    } else if (arr1[i] > arr2[j]) {
+      j++;
+    } else {
+      if (res.length === 0 || res[res.length - 1] != arr1[i]) {
+        res.push(arr1[i]);
+      }
+      i++;
+      j++;
+    }
+  }
+  return res;
+}
+console.log(intersectionOfSortedWithoutDup([1, 2, 2, 3], [1, 2, 4]));

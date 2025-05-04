@@ -249,4 +249,93 @@ Sorting
                 swap(arr[low],arr[j])
                 return j;
             }
+Arrays
+    2nd largest in an array 
+        brute force
+            sort array 
+            check for duplicates
+                start from n-2
+                go to left until ele != arr[n-1]
+        optimal 
+            large = arr[0]
+            large2 = -Infinity
+            for(ele of arr){
+                if(ele > large){
+                    // move current large to second large
+                    large2 = large;
+                    // make current ele as large 
+                    large = ele;
+                }
+                else if(ele < large && ele > large2){
+                    // ele less than large and greater than 2nd largest
+                    large2 = ele
+                }
+            }
+    remove duplicates from sorted array 
+        brute force 
+            add all elements to a set 
+            take elements from set and add to the array 
+        optimal (two pointer approach)
+            i = 0 // tracks last unique element
+            j = 1 // tracks next element to be added
+            while(j<arr.length){
+                if(arr[j] != arr[i]){
+                    // increase i & add new element
+                    i++;
+                    arr[i] = arr[j]
+                    j++;
+                }
+            }
+    leftRotateArrayBy1
+        code: 
+            first = arr[0];
+            i = 0;
+            while (i <= arr.length - 2) {
+                arr[i] = arr[i + 1];
+                i++;
+            }
+            arr[arr.length - 1] = first;
+    RotateArrayByK places 
+        if rotation happens by arr.length times 
+            array will come to it's original order 
+        so we can rotate arr by (K % arr.length) times 
+        brute force 
+            left rotate
+                k = k%n
+                store first k elements in temp
+                    temp = arr.slice(0,k)
+                shift remaining elements to the left 
+                    for (let i = k; i < n; i++) {
+                        arr[i - k] = arr[i];
+                    }
+                now place first k elements at the end
+                    for (let i = 0; i < temp.length; i++) {
+                        arr[i + n - k] = temp[i];
+                    }
+            right rotate 
+                k = k%n
+                store last k elements in temp
+                    temp = arr.slice(-k)
+                shift first n-k elements to the last
+                    for (let i = 0; i < n - k; i++) {
+                        arr[n - i - 1] = arr[n - k - i - 1];
+                    }
+                place last k elements at first
+                    for (let i = 0; i < temp.length; i++) {
+                        arr[i] = temp[i];
+                    }
+            Time Complexity: 
+                O(k) for temp, O(n-k) & O(k)
+                O(n+k)
+        optimal (no extra space)
+            left rotate 
+                1.reverse first k elements
+                2.reverse last (n-k) elements 
+                3.reverse total array
+            right rotate 
+                1.reverse last k elements
+                2.reverse first (n-k) elements
+                3.reverse total array
+            Time Complexity: 
+                O(n+k)
 */

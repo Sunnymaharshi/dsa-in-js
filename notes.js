@@ -91,6 +91,7 @@ Hashing
 
 Sorting 
     Selection Sort
+        not a stable sort
         select minimums & swap 
         1. start from i to n-2
             n-2 as no need to swap last element with itself
@@ -109,6 +110,7 @@ Sorting
         Time Complexity: O(n^2)
 
     Bubble Sort 
+        stable sort 
         adjacent swapping - push max elements to last by adjacent swaps
         1. start from i to n-1             
         2. swap adjacents  
@@ -131,6 +133,7 @@ Sorting
             O(n) for best case 
          
     Insertion Sort 
+        stable sort 
         always takes an element and inserts it in correct position
         1. for each element i (0 to n-1)
         2. swap it with prev elements until u can't swap 
@@ -150,6 +153,7 @@ Sorting
             O(n) for best case
     
     Merge sort
+        stable sort
         divide and merge 
         1. divide array until u have only 1 element left
             divide array into left and right
@@ -157,6 +161,8 @@ Sorting
         2. merge both sides after dividing 
             each side will have single element or sorted elements
             merge them in sorted order
+        Time Complexity:
+            Best,Average & worst case: O(nlogn)
         code:
             mergeSort(arr){
                 if(arr.length<=1){
@@ -184,5 +190,63 @@ Sorting
                 res.concat(left.slice(l))
                 res.concat(right.slice(r))
                 return res;
+            }
+    Quick Sort 
+        not a stable sort
+        it is also a divide and conquer approach
+        1.select a pivot element 
+        2.partition the array 
+            all elements less than pivot are on one side
+            all elements greater than pivot are on other side
+            means placing the pivot in it's position in sorted array
+            *can use extra left and right arrays for this or inplace logic
+        3.recursively sort sub arrays 
+        Time Complexity:
+            Best & Average case: O(nlogn)
+                when pivot divides array into two roughly equal halves
+            Worst case: O(n^2)
+                when pivot is smallest or highest element repeatedly 
+                resulting in unbalanced partitions
+        code:
+            quickSort(arr, left = 0, right = arr.length - 1) {                    
+                if (left < right) {
+                    const pivotindex = partition(arr, left, right);
+                    quickSort(arr, left, pivotindex - 1);
+                    quickSort(arr, pivotindex + 1, right);
+                }
+            }
+            in-place partition logic:
+                first element is pivot
+                first index(i), last index (j)
+                while i<j
+                    with i 
+                        find first element > pivot from left
+                    with j 
+                        find first element < pivot from right
+                    move element < pivot to left and element > pivot to right
+                    swap(i,j) if i < j
+                    repeat while i < j 
+                now i>j 
+                    all elements right to j are > pivot 
+                    all elements left to j including j are < pivot
+                swap(low,j), now move pivot element to jth position             
+                return j (pivotindex)
+            partition(arr, low, high) {
+                const pivot = arr[low];
+                let i = low;
+                let j = high;
+                while (i < j) {
+                    while (arr[i] <= pivot && i < high) {
+                        i++;
+                    }
+                    while (arr[j] > pivot && j > low) {
+                        j--;
+                    }
+                    if (i < j) {
+                        swap(arr[i],arr[j])
+                    }
+                }
+                swap(arr[low],arr[j])
+                return j;
             }
 */

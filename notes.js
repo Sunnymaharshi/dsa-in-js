@@ -338,6 +338,68 @@ Arrays
                 3.reverse total array
             Time Complexity: 
                 O(n+k)
+    check if array is sorted and rotated (including 0 rotations)
+        brute force
+            i (0 to n-1)
+                take first i elements and place at the end 
+                check if it is non decreasing 
+            Time Complexity:
+                O(n^2)
+        better (sliding window or pointer)
+            *concatenate array with itself arr2 = [...arr,...arr]
+            *arr2 will have original array if it is rotated 
+            *instead of arr2, we can use i%n to traverse same array again 
+            if (n <= 1) {
+                return true;
+            }
+            let i = 1;
+            let count = 1;
+            while (i < 2 * n) {
+                // check if it is in non-decreasing order
+                if (arr[i % n] >= arr[(i - 1) % n]) {
+                    count++;
+                }
+                // reset count (include current element to track)
+                else {
+                    count = 1;
+                }
+                i++;
+                if (count === n) {
+                    return true;
+                }
+            }
+            return false;
+            Time Complexity:
+                O(2*n)
+        optimal 
+            check breaks (dips) in non-decreasing order 
+            if array is sorted 
+                0 breaks in non-decreasing order 
+            if array is sorted & rotated 
+                only 1 break in non-decreasing order 
+                check non-decreasing order at ends 
+                    arr[0]>=arr[n-1]
+                ex:[2,1,3,4] dip 1 but it is not sorted 
+            dip = 0;
+            i = 1;
+            while (i < arr.length) {
+                if (arr[i] < arr[i - 1]) {
+                    dip++;
+                }
+                if (dip > 1) {
+                    break;
+                }
+                i++;
+            }
+            if (dip === 0) {
+                return true;
+            }
+            if (dip === 1) {
+                return arr[0] >= arr[arr.length - 1];
+            }
+            return false;
+            Time Complexity:
+                O(n)
     Move zeros to the end 
         brute force 
             store non zero elements in seperate array 
@@ -413,4 +475,7 @@ Arrays
         }
         Time complexity:
             O(n+m)
+     
+            
+
 */

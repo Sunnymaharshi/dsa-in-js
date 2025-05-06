@@ -232,4 +232,81 @@ function intersectionOfSortedWithoutDup(arr1, arr2) {
   }
   return res;
 }
-console.log(intersectionOfSortedWithoutDup([1, 2, 2, 3], [1, 2, 4]));
+// console.log(intersectionOfSortedWithoutDup([1, 2, 2, 3], [1, 2, 4]));
+
+function isArraySortedandRotated_brute(arr) {
+  const original = arr.slice();
+
+  for (const ele of arr) {
+    const checkSorted = (array) => {
+      let isSorted = true;
+      for (let i = 1; i < original.length; i++) {
+        if (array[i] < array[i - 1]) {
+          isSorted = false;
+          break;
+        }
+      }
+      return isSorted;
+    };
+    // remove element and add to the end, undoing rotation
+    original.shift();
+    original.push(ele);
+    // check if new array is sorted
+    if (checkSorted(original)) {
+      return true;
+    }
+  }
+  return false;
+}
+// console.log(isArraySortedandRotated_brute([3, 4, 5, 1, 2]));
+function isArraySortedandRotated_better(arr) {
+  // [...arr,...arr] will have original array if arr is rotated
+  // instead of new array we can use i%n to traverse same array again
+  const n = arr.length;
+  // edge case, since i is starting from 1
+  if (n <= 1) {
+    return true;
+  }
+  let i = 1;
+  let count = 1;
+  while (i < 2 * n) {
+    // check if it is in non-decreasing order
+    if (arr[i % n] >= arr[(i - 1) % n]) {
+      count++;
+    }
+    // reset count (include current element to track)
+    else {
+      count = 1;
+    }
+    i++;
+    // if non-decreasing array of len n is found, return true
+    if (count === n) {
+      return true;
+    }
+  }
+  return false;
+}
+// console.log(isArraySortedandRotated_better([3, 4, 5, 1, 2]));
+function isArraySortedandRotated_optimal(arr) {
+  // check breaks (dips) in non-decreasing order
+  let dip = 0;
+  let i = 1;
+  while (i < arr.length) {
+    if (arr[i] < arr[i - 1]) {
+      dip++;
+    }
+    if (dip > 1) {
+      break;
+    }
+    i++;
+  }
+  if (dip === 0) {
+    return true;
+  }
+  // check non-decreasing order at ends
+  if (dip === 1) {
+    return arr[0] >= arr[arr.length - 1];
+  }
+  return false;
+}
+// console.log(isArraySortedandRotated_optimal([2, 1, 3, 4]));

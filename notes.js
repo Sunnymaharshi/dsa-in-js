@@ -475,7 +475,39 @@ Arrays
         }
         Time complexity:
             O(n+m)
-     
-            
-
+    missing number in [0...n]
+        given array with nums 0 to n 
+        find missing number in that range 
+        bruteforce 
+            for i = 0 to n  
+                check if i exists 
+                if not return i 
+            Time complexity:
+                O(n^2)
+        better 
+            hash array 
+                length n+1, fill -1 
+            traverse array mark element index in hash 
+            return index which has -1
+            Time complexity:
+                O(n)
+        optimal-1 
+            sum of n natural numbers is n*(n+1)/2 
+            return n*(n+1)/2 - sum(arr)
+            Time complexity:
+                O(n)
+        optimal-2 
+            XOR
+                same number xor is 0
+                0xor0 = 0, 1xor1 = 0
+            we have index 0 to n-1 in array
+            xor indices(including length) and numbers 
+            code: 
+                res = arr.length;
+                for (let i = 0; i < nums.length; i++) {
+                    res ^= i;
+                    res ^= nums[i];
+                }
+            Time complexity:
+                O(n)
 */

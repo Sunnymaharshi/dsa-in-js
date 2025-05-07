@@ -510,4 +510,72 @@ Arrays
                 }
             Time complexity:
                 O(n)
+    longest subarray with sum K (0s & positives)
+        bruteforce
+            create all sub arrays and check sum and update max length 
+            Time Complexity: O(n^2)
+        better (optimal if array has negatives, 0s & positives)
+            prefix sum hash table
+                at each index holds sum of all nums upto that index 
+            traverse the array with prefix sum hash
+                hash<sum,index>
+                x = sum upto i;
+                check if extra sum (x-k) is present in previous prefixes 
+                check k-x in prefix, let prefix[x-k] = j 
+                we remove subarray upto j, then j+1 to i has sum k 
+                store only first occurrence of index for a sum
+                we sum already exists, we should not update it's index 
+                we need to go as left as possible to get longest subarray
+                *edge case if we update at every occurrence
+                    [2,0,0,3] 3
+                    prefix[2] will be 2 [2,0,0]
+                    so we get only [3] as longest subarray instead of [0,0,3]
+            code:
+                const prefix = new Map();
+                let sum = 0;
+                let maxLen = 0;
+                for (let i = 0; i < arr.length; i++) {
+                    sum += arr[i];
+                    if (sum === k) {
+                        maxLen = Math.max(maxLen, i + 1);
+                    }
+                    let extra = sum - k;
+                    if (prefix.has(extra)) {
+                        let len = i - prefix.get(extra);
+                        maxLen = Math.max(maxLen, len);
+                    }
+                    if (!prefix.has(sum)) {
+                        prefix.set(sum, i);
+                    }
+                }
+            Time Complexity:
+                O(n*logn)
+                worst case(map): O(n^2)
+        optimal (sliding window or two pointer)
+            *array has only 0s & positives
+            i,j tracks longest subarray of sum<=k 
+            increase i unitl sum <= k (shrink arr)
+            check sum is k or not 
+            increase j
+            code:
+                let i = 0;
+                let j = 0;
+                let sum = arr[0];
+                let maxLen = 0;
+                while (j < arr.length) {
+                    while (i <= j && sum > k) {
+                        sum -= arr[i];
+                        i++;
+                    }
+                    if (sum === k) {
+                        maxLen = Math.max(maxLen, j - i + 1);
+                    }
+                    // increase j
+                    j++;
+                    if (j < arr.length) {
+                        sum += arr[j];
+                    }
+                }
+            Time Complexity:
+                O(2n)
 */

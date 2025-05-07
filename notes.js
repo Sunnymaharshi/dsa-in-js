@@ -578,4 +578,67 @@ Arrays
                 }
             Time Complexity:
                 O(2n)
+    two sum 
+        any two elements with sum k 
+        bruteforce
+            for every element i 
+                for every other element after i
+                    because if i and j is checked
+                    no need to check j and i again 
+                    check if both sum is k 
+            Time Complexity:
+                O(n^2)
+        better (hashing)
+            store all numbers in a map<num,i>
+            for every number 
+                check if k-num exists in map 
+            Time Complexity:
+                O(n) if map takes O(1)
+                O(nlogn) if map takes o(logn)
+        optimal (2 pointer approach)
+            this way u can't return indexes as arr is modified by Sort 
+            to get indexes also, we need store index along with number
+            i from left 
+            j from right 
+            while i<j
+                if arr[i] + arr[j] === k 
+                    return [i,j]
+                else if arr[i]+arr[j] < k 
+                    i++;
+                else 
+                    j--;
+            Time Complexity:
+                O(nlogn + n) without extra space 
+    sort array of 0s, 1s & 2s 
+        bruteforce
+            sort array 
+            Time Complexity: O(nlogn)
+        better 
+            counting sort 
+                count 0s 1s & 2s 
+                Time Complexity:
+                    O(2*n)
+        optimal (3 pointers approach)
+            dutch national flag algorithm rules:
+            left - 0s [0 to left-1]
+            mid  - 1s [left to mid -1]
+            unsorted [mid to right]
+            right- 2s [right+1 to n-1]
+            code: 
+                left = 0, mid = 0;
+                right = n-1;
+                while (mid <= right) {
+                    if (arr[mid] === 0) {
+                        swap(arr[left], arr[mid]);
+                        left++;
+                        mid++;
+                    } else if (arr[mid] === 1) {                    
+                        mid++;
+                    } else {
+                        swap(arr[mid],arr[right]);
+                        right--;
+                    }
+                }
+            Time Complexity:
+                O(n)        
 */

@@ -594,7 +594,6 @@ Arrays
                 check if k-num exists in map 
             Time Complexity:
                 O(n) if map takes O(1)
-                O(nlogn) if map takes o(logn)
         optimal (2 pointer approach)
             this way u can't return indexes as arr is modified by Sort 
             to get indexes also, we need store index along with number
@@ -640,5 +639,280 @@ Arrays
                     }
                 }
             Time Complexity:
-                O(n)        
+                O(n)     
+    majority element 
+        element that appears more than n/2 time 
+        brute 
+            for each element
+                check count of element in array
+                check if count > n/2
+            Time Complexity:
+                O(n^2)
+        better1 
+            use map to store the count of each element
+            Time Complexity:
+                O(n) if map takes O(1)
+        better2
+            if element occurs more than n/2 times it will 
+            occupy arr[n/2] when sorted 
+            sort array and return arr[n/2]
+        optimal
+            Moore's voting algorithm
+            finds the majority element but does not keep exact count
+            1. assume mj = first element as majority & count=1
+                if element appears more than n/2 times 
+                    it's count will be >=1
+                    if count is 0 
+                        no element appeared >n/2 times till now
+                if(count==0){
+                    take current element as majority
+                    count=1
+                }
+                else{
+                    count++ if mj appears again 
+                    count-- if some other element appears
+                }
+                after loop ends mj holds majority element in arr
+            2. if problem say majority might not exists 
+                check count of mj 
+            Time Complexity: 
+                O(n)
+    maxSubarraySum 
+        bruteforce
+            check sum of all sub arrays 
+            Time Complexity: O(n^2)
+        optimal
+            kadane's algorithm
+            sum that tracks subarray sum 
+            take elements into the subarray 
+                update sum with max
+                if sum > 0
+                    take more elements into the subarray
+                if sum < 0
+                    remove the subarray entirely
+                    start creating new subarray
+                    *because adding anything to -ve subarray will decrease sum 
+            code:
+                max = -infinity 
+                sum = 0
+                // print subarray
+                let startIndex = 0;
+                let ans;
+                for (let i = 0; i < arr.length; i++) {
+                    // starting new subarray
+                    if (sum === 0) {
+                        startIndex = i;
+                    }
+                    sum += arr[i];
+                    if (sum > max) {
+                        max = sum;
+                        ans = [startIndex, i];
+                    }
+                    // sum is negative, don't consider this subarray
+                    if (sum < 0) {
+                        sum = 0;
+                    }
+                }
+            Time Complexity: 
+                O(n)
+    Best Time to Buy & Sell Stock - 1
+        bruteforce
+            for every element i
+                for every element after i 
+                    check profit 
+            Time Complexity:
+                O(n^2)
+        optimal
+            let buy = arr[0];
+            let profit = 0;
+            for (let i = 1; i < arr.length; i++) {
+                // sell & update max profit
+                if (arr[i] > buy) {
+                    profit = Math.max(profit, arr[i] - buy);
+                }
+                // always buy at cheaper price
+                else if (arr[i] < buy) {
+                    buy = arr[i];
+                }
+            } 
+        Time Complexity:
+            O(n)
+    rearrange array elements by sign 
+        input array has equal +ve's & -ve's
+        rules 
+            Every consecutive pair of integers have opposite signs
+            For all integers with the same sign, the order is preserved.
+            The rearranged array begins with a positive integer.
+            positives at even indexes 
+            negatives at odd indexes
+        brute 
+            store +ve's & -ve's in different arrays 
+            for(i 0 to n/2){
+                arr[2*i] = pos[i];
+                arr[2*i+1] = neg[i]
+            }
+            Time Complexity:
+                O(n) - 2 passes 
+                space - O(n) 
+        optimal
+            res = new Array(n)
+            let pInd = 0;
+            let nInd = 1;
+            for (let i = 0; i < arr.length; i++) {
+                if (arr[i] < 0) {
+                    res[nInd] = arr[i];
+                    nInd += 2;
+                } else {
+                    res[pInd] = arr[i];
+                    pInd += 2;
+                }
+            }
+            Time Complexity:
+                O(n) - 1 pass 
+                space - O(n)
+        input array does not have equal +ve's & -ve's
+        brute 
+            if(pos.len > neg.len)
+                for(i = 0 to neg.len){
+                    arr[2*i] = pos[i];
+                    arr[2*i+1] = neg[i]
+                }
+                ind = 2*neg.len
+                for(j = neg.len to pos.len){
+                    arr[ind] = pos[j]
+                    ind++
+                }
+            else 
+                do reverse of above 
+            Time Complexity:
+                O(2*n)
+                space - o(n)
+    next permutation 
+        brute 
+            generate all permutations in sorted order 
+            return next permutation of given input 
+            Time Complexity:
+                O(n*n!)
+        optimal 
+            next permutation 
+                it is slightly greater than given 
+                we keep prefix same as mush as possible 
+                change at end to get next greater permutation
+            1.find dip - longest prefix
+                dip = from right left, decrease in value 
+                means we can get greater value at dip 
+                [2,1,5,3] dip is at element 1(index 1)                
+            2.if dip is not found 
+                given is last permutation
+                reverse it to get next permutation
+            3.if dip is present 
+                find smallest but > dip element & swap 
+                reverse elements after dip to get least number 
+            Time Complexity:
+                O(3*n)
+    find leaders in array 
+        everything on right of leader is smaller
+        bruteforce
+            for every element
+                check all elements after it are smaller  
+        optimal
+            track max from right 
+            leaders stored from right to left order in arr 
+            code:
+                max = -infinity
+                for i n-1 to 0
+                    if(arr[i]>max){
+                        max = arr[i]
+                        leaders.push(arr[i])
+                    } 
+            Time Complexity:
+                O(n)
+    longest consecutive sequence 
+        5(1,2,3,4,5) in [4,5,1,2,3]
+        brute 
+            for every element
+                check consecutive numbers in the arr  
+            Time Complexity:
+                O(n^2)
+        better 
+            sort array & track longest sequence
+            arr.sort((a, b) => a - b);
+            let last = -Infinity;
+            let max = 0;
+            let count = 0;
+            for (let ele of arr) {
+                if (ele - 1 === last) {
+                    count++;
+                    last = ele;
+                }
+                // restart the sequence
+                else if (ele !== last) {
+                    count = 1;
+                    last = ele;
+                }
+                max = Math.max(max, count);
+            }
+            Time Complexity:
+                O(nlogn + n)
+        optimal
+            store all elements in set 
+            only start checking from start number in sequence
+                for start, start - 1 does not exists 
+            code:
+                const set = new Set(arr);
+                let max = 0;
+                for (const ele of set) {
+                    // for starting element of seq
+                    if (!set.has(ele - 1)) {
+                    let count = 1;
+                    let temp = ele;
+                    while (set.has(temp + 1)) {
+                        count++;
+                        temp++;
+                    }
+                    max = Math.max(max, count);
+                    }
+                }
+            Time Complexity:
+                O(3n)
+                space O(n)
+    set matrix zeros 
+        if zero found, make it's row and col 0s 
+        brute 
+            traverse matrix 
+                *if zero found make it's row & col -1
+            make all -1's to 0s 
+            Time Complexity:
+                O((m*n)*(m+n) + m*n)
+        better 
+            mark cols & rows that need to be 0s in seperate arrays 
+            traverse matrix and make 0s
+            Time Complexity:
+                O(2(m*n))
+                space O(n+m)
+        optimal 
+            instead of extra arrays to mark rows & cols
+            use first row and first col 
+                since row0 and col0 overlaps 
+                *use col0 variable for col  
+            *do not update first row & first col at beginning
+                for every element we check them
+                if they get updated at first it will cause incorrect 0s 
+            traverse elements other than first row and first col 
+                update 0s as per first row & first col 
+            update first row since first row depends on mat[0][0]
+                which we can't update first by using col0 
+            update first col at end at it depends on external variable
+            Time Complexity:
+                O(2(m*n))
+    Rotate image 90deg 
+        rotate matrix 90deg clockwise 
+        bruteforce
+            create new matrix 
+            move first row to last column 
+            2nd row to 2nd last column so on 
+            Time Complexity:
+                O(m*n)
+                space O(m*n)
+            
 */

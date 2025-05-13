@@ -911,8 +911,26 @@ Arrays
             create new matrix 
             move first row to last column 
             2nd row to 2nd last column so on 
+                i,j -> j,n-1-i
             Time Complexity:
                 O(m*n)
                 space O(m*n)
-            
+        optimal
+            transpose the matrix (rows->cols)
+                diagonal stays same
+                swap elements with opposite row & col element
+            reverse every row 
+            code:
+                // transpose matrix
+                for (let i = 0; i < n - 1; i++) {
+                    for (let j = i + 1; j < n; j++) {
+                    // swap i,j with j,i
+                    [mat[i][j], mat[j][i]] = [mat[j][i], mat[i][j]];
+                    }
+                }
+                for (let i = 0; i < n; i++) {
+                    mat[i].reverse();
+                }
+            Time Complexity:
+                O(n^2)           
 */

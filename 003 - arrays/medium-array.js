@@ -309,10 +309,32 @@ function setMatrixZeroes_optimal(mat) {
   }
   return mat;
 }
-console.log(
-  setMatrixZeroes_optimal([
-    [1, 1, 1],
-    [1, 0, 1],
-    [1, 1, 1],
-  ])
-);
+// console.log(
+//   setMatrixZeroes_optimal([
+//     [1, 1, 1],
+//     [1, 0, 1],
+//     [1, 1, 1],
+//   ])
+// );
+function rotateImage_optimal(mat) {
+  const n = mat.length;
+  // transpose matrix
+  for (let i = 0; i < n - 1; i++) {
+    for (let j = i + 1; j < n; j++) {
+      // swap i,j with j,i
+      [mat[i][j], mat[j][i]] = [mat[j][i], mat[i][j]];
+    }
+  }
+  // reverse every row
+  for (let i = 0; i < n; i++) {
+    mat[i].reverse();
+  }
+  return mat;
+}
+// console.log(
+//   rotateImage_optimal([
+//     [1, 2, 3],
+//     [4, 5, 6],
+//     [7, 8, 9],
+//   ])
+// );

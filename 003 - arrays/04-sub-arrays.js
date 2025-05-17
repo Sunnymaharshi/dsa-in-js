@@ -94,4 +94,27 @@ function BuyandSell_1_optimal(arr) {
 }
 // console.log(BuyandSell_1_optimal([1, 0, 2, 3, 6]));
 
-function countSubarraySumK(arr, k) {}
+function countSubarraySumK_optimal(arr, k) {
+  // map<s,cnt>
+  const map = {};
+  let prefixSum = 0;
+  let ans = 0;
+  for (const ele of arr) {
+    prefixSum += ele;
+    // if subarray sum is k, increase count
+    if (prefixSum === k) {
+      ans++;
+    }
+    // calculate how much to remove to get sum k
+    let r_sum = prefixSum - k;
+    // if found, we can remove these subarray(s) to get sum k
+    // add count of r_sum to ans
+    if (map[r_sum] !== undefined) {
+      ans += map[r_sum];
+    }
+    // update prefixSum count
+    map[prefixSum] = (map[prefixSum] || 0) + 1;
+  }
+  return ans;
+}
+// console.log(countSubarraySumK_optimal([1, 1, 1], 2));

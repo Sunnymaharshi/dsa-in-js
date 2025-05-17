@@ -575,6 +575,46 @@ Sub Arrays
             } 
         Time Complexity:
             O(n)
+    count sum arrays with sum K 
+        bruteforce
+            generate all sub arrays 
+            count sum with K 
+            Time Complexity:
+                O(n^2)
+        optimal
+            prefix sum 
+                store sum upto ith index 
+                map<s,count> 
+                count -> no of subarrays that giving sum s 
+            let S is sum on ith index 
+            if S==K 
+                res++;
+            to get sum K we need to remove S-K 
+            check if we have S-K in prefix sum 
+            if found, we can remove that sum array to get sum K 
+            code:
+                const map = {};
+                prefixSum = 0;
+                ans = 0;
+                for (const ele of arr) {
+                    prefixSum += ele;
+                    // if subarray sum is k, increase count
+                    if (prefixSum === k) {
+                        ans++;
+                    }
+                    // calculate how much to remove to get sum k
+                    r_sum = prefixSum - k;
+                    // if found, we can remove these subarray(s) to get sum k 
+                    // add count of r_sum to ans
+                    if (map[r_sum] !== undefined) {
+                        ans += map[r_sum];
+                    }
+                    // update prefixSum count
+                    map[prefixSum] = (map[prefixSum] || 0) + 1;
+                }
+        Time Complexity:
+            O(n)
+            space: O(n)
 Rotated Arrays
     leftRotateArrayBy1
         code: 

@@ -928,6 +928,8 @@ Miscellaneous Arrays
             if element occurs more than n/2 times it will 
             occupy arr[n/2] when sorted 
             sort array and return arr[n/2]
+            Time Complexity:
+                O(nlogn)
         optimal
             Moore's voting algorithm
             finds the majority element but does not keep exact count
@@ -948,6 +950,53 @@ Miscellaneous Arrays
             2. if problem say majority might not exists 
                 check count of mj 
             Time Complexity: 
+                O(n)
+    majority element II 
+        elements that occur > floor(n/3) times 
+        max elements in array of len n that occur >n/3 times is 2 
+            8/3 => 2, least >2 is 3 => 8/3 is 2 
+            9/3 => 3, least >3 is 4 => 9/4 is 2 
+        bruteforce
+            for each element
+                count it's occurrence
+                check if count > n/3
+            Time Complexity:
+                O(n^2)
+        better 
+            store count in map 
+            return elements whose count > n/3
+            Time Complexity:
+                O(n)
+                space complexity: O(n)
+        optimal
+            modify majority element I optimal for 2 elements
+            code:
+                let cnt1 = 0;
+                let cnt2 = 0;
+                let ele1, ele2;
+                let minCount = Math.floor(arr.length / 3) + 1;
+                const ans = [];
+                for (const n of arr) {
+                    // check if n is not taken by ele2
+                    if (cnt1 === 0 && n !== ele2) {
+                        cnt1 = 1;
+                        ele1 = n;
+                    }
+                    // check if n is not taken by ele1 
+                    else if (cnt2 === 0 && n !== ele1) {
+                        cnt2 = 1;
+                        ele2 = n;
+                    } else if (n === ele1) {
+                        cnt1++;
+                    } else if (n === ele2) {
+                        cnt2++;
+                    } else {
+                        cnt1--;
+                        cnt2--;
+                    }
+                }
+                // check both elements count
+            Time Complexity:
                 O(n)
     find leaders in array 
         everything on right of leader is smaller
@@ -1037,5 +1086,63 @@ Miscellaneous Arrays
                 find smallest but > dip element & swap 
                 reverse elements after dip to get least number 
             Time Complexity:
-                O(3*n)     
+                O(3*n)   
+    Pascal's Triangle 
+        pascal triangle
+            1 around the triangle
+            p[r][c] is sum of element above it 
+            nth row will have n elements
+            ex: 
+                    1
+                  1    1
+                1   2    1  
+              1   3    3    1  
+            1   4    6    4    1
+        1. p[r][c]
+            r-1Cc-1
+            7C2 = 7!/2!*(7-2)!
+            becomes  = 7*6/2*1
+            code:
+                function nCr(){
+                    res = 1;
+                    for(i=0;i<r;i++){
+                        res = res*(n-i);
+                        res = res/(i+1)
+                    } 
+                    return res;                   
+                }
+            Time Complexity:
+                O(r)
+        2. print nth row 
+            bruteforce
+                use above function for each element in row 
+                Time Complexity:
+                    O(n*r)
+            optimal
+                in formula,
+                to get current element 
+                    we multiply 1 extra number above and below to previous
+                for 5th row: 1, 4/1, 4*3/1*2, 4*3*2/1*2*3 ... 1
+                code:
+                    res = 1
+                    print(res)
+                    for(i=1;i<n;i++){
+                        res = res * (n-i)
+                        res = res/i
+                        print(res)
+                    }
+                Time Complexity:
+                    O(n)
+        3. print total pascal's triangle
+            bruteforce
+                generate each element using first method 
+                Time Complexity: 
+                    O(n*n*r)
+            bruteforce2
+                recursion can be used to generate each element
+            optimal 
+                generate all rows using second method
+                Time Complexity:
+                    O(n^2)
+    
 */

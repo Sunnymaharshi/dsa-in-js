@@ -25,6 +25,52 @@ function majorityElement_optimal(arr) {
 }
 // console.log(majorityElement_optimal([3, 3, 4]));
 
+function majorityElement_II_optimal(arr) {
+  let cnt1 = 0;
+  let cnt2 = 0;
+  let ele1, ele2;
+  let minCount = Math.floor(arr.length / 3) + 1;
+  const ans = [];
+  for (const n of arr) {
+    // check if n is not taken by ele2
+    if (cnt1 === 0 && n !== ele2) {
+      cnt1 = 1;
+      ele1 = n;
+    }
+    // check if n is not taken by ele1
+    else if (cnt2 === 0 && n !== ele1) {
+      cnt2 = 1;
+      ele2 = n;
+    } else if (n === ele1) {
+      cnt1++;
+    } else if (n === ele2) {
+      cnt2++;
+    } else {
+      cnt1--;
+      cnt2--;
+    }
+  }
+  // check both elements count
+  cnt1 = 0;
+  cnt2 = 0;
+  for (const n of arr) {
+    if (n === ele1) {
+      cnt1++;
+    }
+    if (n === ele2) {
+      cnt2++;
+    }
+  }
+  if (cnt1 >= minCount) {
+    ans.push(ele1);
+  }
+  if (cnt2 >= minCount) {
+    ans.push(ele2);
+  }
+  return ans;
+}
+// console.log(majorityElement_II_optimal([3, 2, 3]));
+
 function findLeaders_optimal(arr) {
   let max = -Infinity;
   const leaders = [];
@@ -114,3 +160,23 @@ function nextPermutation(arr) {
   return arr;
 }
 // console.log(nextPermutation([1, 2, 3]));
+
+function pascalTriangleRow_optimal(n) {
+  const row = [1];
+  let ans = 1;
+  for (let col = 1; col < n; col++) {
+    ans = ans * (n - col);
+    ans = ans / col;
+    row.push(ans);
+  }
+  return row;
+}
+// console.log(pascalTriangleRow_optimal(5));
+function pascalTriangle_optimal(n) {
+  const ans = [];
+  for (let i = 0; i < n; i++) {
+    ans.push(pascalTriangleRow_optimal(i + 1));
+  }
+  return ans;
+}
+// console.log(pascalTriangle_optimal(5));

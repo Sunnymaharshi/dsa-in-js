@@ -738,7 +738,7 @@ Rotated Arrays
                 3.reverse total array
             Time Complexity: 
                 O(n+k)
-N-Sum Arrays 
+N Sum Arrays 
     two sum (2Sum)
         any two elements with sum k 
         bruteforce
@@ -769,6 +769,89 @@ N-Sum Arrays
                     j--;
             Time Complexity:
                 O(nlogn + n) without extra space 
+    three Sum (3Sum)
+        find all triplets whose sum is 0 
+        can't take same element more than once 
+        bruteforce
+            generate all triplets
+            add who sum is 0
+            Time Complexity:
+                O(n^3)
+        *better 
+            we remove 3rd loop 
+            to have sum 0, 3rd element must be -(1st+2nd)
+            use hashing to find 3rd element
+            to avoid taking 1st or 2nd element again 
+            we keep elements btw 1st & 2nd element in map 
+            code:
+                const ans = new Set();
+                for (let i = 0; i < n; i++) {
+                    // set tracks elements btw arr[i] and arr[j]
+                    // for every i reset this set
+                    const set = new Set();
+                    for (let j = i + 1; j < n; j++) {
+                        let third = -(arr[i] + arr[j]);
+                        if (set.has(third)) {
+                            let temp = [arr[i], arr[j], third];
+                            temp.sort((a, b) => a - b);
+                            // set checks ref if it is array, so stringify it
+                            ans.add(JSON.stringify(temp));
+                        }
+                        // before moving j, add that element to set
+                        set.add(arr[j]);
+                    }
+                }
+                return ans.map((arr) => JSON.parse(arr));
+            Time Complexity:
+                O(N^2*logM)
+                space: O(n) + O(triplets)
+        optimal
+            2 pointer approach
+            sort the array
+            i -> tracks first element
+            j -> tracks second element
+            k -> tracks third element
+            for every unique i,
+                j = j+1
+                k = n-1
+                move j & k depending on sum
+            code:
+                arr.sort((a, b) => a - b);
+                for (let i = 0; i < n; i++) {
+                    // if it is not first element & same as prev element skip taking it as first element
+                    if ((i > 0) & (arr[i] === arr[i - 1])) {
+                        continue;
+                    }
+                    let j = i + 1; // 2nd element is next of first
+                    let k = n - 1; // k at the end
+                    while (j < k) {
+                        const sum = arr[i] + arr[j] + arr[k];
+                        // triplet found
+                        if (sum === 0) {
+                            ans.push([arr[i], arr[j], arr[k]]);
+                            // don't pick elements that are already taken
+                            j++;
+                            k--;
+                            // remove duplicates
+                            while (j < k && arr[j] === arr[j - 1]) {
+                                j++;
+                            }
+                            while (j < k && arr[k] === arr[k + 1]) {
+                                k--;
+                            }
+                        }
+                        // increase sum value by increasing j
+                        else if (sum < 0) {
+                            j++;
+                        }
+                        // decrease sum value by decreasing k
+                        else {
+                            k--;
+                        }
+                    }
+                }
+            Time Complexity:
+                O(nlogn + n^2)
 Hash Arrays
     missing number in [0...n]
         given array with nums 0 to n 
